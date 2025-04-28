@@ -14,6 +14,9 @@ services:
       KONG_DECLARATIVE_CONFIG: /usr/local/kong/kong.yml
       KONG_DNS_ORDER: LAST,A,CNAME
       KONG_PLUGINS: "bundled,key-auth"
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
     volumes:
       - ./kong/kong.yml:/usr/local/kong/kong.yml:ro
     networks:
@@ -67,9 +70,10 @@ services:
       dockerfile: Dockerfile
     # ports:
     #   - "3000:3000"
+    env_file:
+      - ./mongodb-init/.env
     environment:
       - NODE_ENV=development
-      - MONGODB_URI=mongodb://root:root_password@mongodb:27017/notification_db?authSource=admin&directConnection=true
       - KAFKA_BROKERS=kafka:29092
     depends_on:
       - mongodb
@@ -82,9 +86,10 @@ services:
     build:
       context: ./email-service
       dockerfile: Dockerfile
+    env_file:
+      - ./mongodb-init/.env
     environment:
       - NODE_ENV=development
-      - MONGODB_URI=mongodb://root:root_password@mongodb:27017/notification_db?authSource=admin&directConnection=true
       - KAFKA_BROKERS=kafka:29092
     depends_on:
       - kafka
@@ -96,9 +101,10 @@ services:
     build:
       context: ./telegram-service
       dockerfile: Dockerfile
+    env_file:
+      - ./mongodb-init/.env
     environment:
       - NODE_ENV=development
-      - MONGODB_URI=mongodb://root:root_password@mongodb:27017/notification_db?authSource=admin&directConnection=true
       - KAFKA_BROKERS=kafka:29092
     depends_on:
       - kafka

@@ -22,20 +22,12 @@ export class NotificationController {
   }
 
   @Post()
-  @ApiOperation({ summary: 'Create a new notification' })
-  @ApiResponse({ status: 200, description: 'The notification has been successfully created.' })
+  @ApiOperation({ summary: 'Send a new notification' })
+  @ApiResponse({ status: 200, description: 'The notification has been sent.' })
   @ApiResponse({ status: 400, description: 'Bad request.' })
-  async create(@Body() createNotificationDto: CreateNotificationDto) {
-    this.logger.info(`Sending notification: ${JSON.stringify(createNotificationDto)}`, { context: this.context, function: this.create.name });
-    return this.notificationService.create(createNotificationDto);
-  }
-
-  @Get()
-  @ApiOperation({ summary: 'Get all notifications' })
-  @ApiResponse({ status: 200, description: 'Return all notifications.' })
-  async findAll(): Promise<Notification[]> {
-    this.logger.info(`Getting all notifications`, { context: this.context, function: this.findAll.name });
-    return this.notificationService.findAll();
+  async send(@Body() createNotificationDto: CreateNotificationDto) {
+    this.logger.info(`Sending notification: ${JSON.stringify(createNotificationDto)}`, { context: this.context, function: this.send.name });
+    return this.notificationService.send(createNotificationDto);
   }
 
   @Get(':id')

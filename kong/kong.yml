@@ -30,6 +30,12 @@ services:
           exposed_headers: ["x-auth-token"]
           credentials: true
           max_age: 3600
+  - name: swagger-ui
+    url: http://notification-service:3000/docs
+    routes:
+      - name: swagger-ui-routes
+        paths:
+          - /docs
 
 consumers:
   - username: api-consumer

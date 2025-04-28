@@ -24,14 +24,14 @@ export class NotificationService {
   }
 
 
-  async create(createNotificationDto: CreateNotificationDto): Promise<{ requestId: string }> {
+  async send(createNotificationDto: CreateNotificationDto): Promise<{ requestId: string }> {
     const requestId = uuid();
     const notification = await this.notificationModel.create({
       requestId,
       ...createNotificationDto,
     });
 
-    this.logger.info(`Notification created: ${notification.requestId}`, { context: this.context, function: this.create.name });
+    this.logger.info(`Notification created: ${notification.requestId}`, { context: this.context, function: this.send.name });
 
     await this.kafkaService.publish(KAFKA_TOPICS[createNotificationDto.channel], {
       id: notification._id,
@@ -42,18 +42,8 @@ export class NotificationService {
     return { requestId };
   }
 
-  async findAll(): Promise<Notification[]> {
-    this.logger.info(`Finding all notifications`, { context: this.context, function: this.findAll.name });
-    return this.notificationModel.find().exec();
-  }
-
   async findOne(id: string): Promise<Notification> {
     this.logger.info(`Finding notification: ${id}`, { context: this.context, function: this.findOne.name });
     return this.notificationModel.findOne({ requestId: id }).exec();
-  }
-
-  async getAllCollections(): Promise<string[]> {
-    const collections = await this.connection.db.listCollections().toArray();
-    return collections.map(collection => collection.name);
   }
 } 

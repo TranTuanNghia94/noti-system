@@ -1,25 +1,22 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { SwaggerModule } from "@nestjs/swagger";
 import { Logger } from "winston";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { swaggerConfig } from "./config/swagger.config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Set global prefix
+  app.setGlobalPrefix('api/v1');
+
   // Enable validation
   app.useGlobalPipes(new ValidationPipe());
 
-  // Configure Swagger
-  const config = new DocumentBuilder()
-    .setTitle("Notification Service API")
-    .setDescription("The notification service API description")
-    .setVersion("1.0")
-    .addApiKey({ type: "apiKey", name: "x-api-key", in: "header" }, "api-key")
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api/docs", app, document);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup("docs", app, document);
 
   // Enable CORS
   app.enableCors();

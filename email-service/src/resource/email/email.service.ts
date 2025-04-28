@@ -87,8 +87,8 @@ export class EmailService implements OnModuleInit {
 
   private async updateNotificationStatus(notificationId: string, status: string, error?: string) {
     await this.notificationModel.findOneAndUpdate(
-      { _id: notificationId, __v: 1 },
-      { status, error, __v: 2 }
+      { _id: notificationId, __v: 0 },
+      { status, error, __v: 1 }
     );
   }
 } 

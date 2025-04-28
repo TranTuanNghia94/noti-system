@@ -85,8 +85,8 @@ export class TelegramService implements OnModuleInit {
   ) {
     const me = await this.bot.getMe();
     await this.notificationModel.findOneAndUpdate(
-      { _id: notificationId, __v: 1 },
-      { status, error, recipient: me.username, __v: 2 }
+      { _id: notificationId, __v: 0 },
+      { status, error, recipient: me.username, __v: 1 }
     );
   }
 }
