@@ -12,6 +12,16 @@ export class ApiKeyAuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
+    
+    // Log request details
+    this.logger.info('Incoming request', {
+      context: ApiKeyAuthGuard.name,
+      function: this.canActivate.name,
+      method: request.method,
+      url: request.url,
+      body: request.body
+    });
+
     const apiKey = request.headers['x-api-key'];
 
     if (!apiKey) {

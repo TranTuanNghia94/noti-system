@@ -19,11 +19,20 @@ export class Notification extends Document {
   @Prop({ required: true, default: 'PENDING' })
   status: string;
 
+  @Prop({ required: false })
+  error?: string;
+
   @Prop({ type: Object })
   metadata?: Record<string, any>;
 
   @Prop()
   subject: string;
+
+  @Prop({ default: Date.now })
+  createdAt: Date;
+
+  @Prop({ default: Date.now })
+  updatedAt: Date;
 }
 
 

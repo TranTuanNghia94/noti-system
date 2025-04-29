@@ -4,29 +4,35 @@ import { NotificationType } from '../dto/notification.dto';
 
 @Schema({ timestamps: true })
 export class Notification extends Document {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true, unique: true, index: true })
   requestId: string;
 
   @Prop({ required: true, enum: NotificationType })
-  type: NotificationType;
+  channel: NotificationType;
 
   @Prop({ required: true })
   recipient: string;
 
   @Prop({ required: true })
-  subject: string;
-
-  @Prop({ required: true })
   message: string;
 
-  @Prop({ required: true})
+  @Prop({ required: true, default: 'PENDING' })
   status: string;
 
-  @Prop()
+  @Prop({ required: false })
   error?: string;
 
   @Prop({ type: Object })
   metadata?: Record<string, any>;
+
+  @Prop()
+  subject: string;
+
+  @Prop({ default: Date.now })
+  createdAt: Date;
+
+  @Prop({ default: Date.now })
+  updatedAt: Date;
 }
 
 export const NotificationSchema = SchemaFactory.createForClass(Notification); 

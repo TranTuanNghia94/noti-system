@@ -4,6 +4,7 @@ import { NotificationController } from "./notification.controller";
 import { NotificationService } from "./notification.service";
 import { Notification, NotificationSchema } from "src/schemas/notification.schema";
 import { KafkaModule } from "src/resource/kafka/kafka.module";
+import { NotificationValidator } from "../validator/noti";
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { KafkaModule } from "src/resource/kafka/kafka.module";
     KafkaModule,
   ],
   controllers: [NotificationController],
-  providers: [NotificationService],
+  providers: [NotificationService, NotificationValidator],
 })
 export class NotificationModule {}

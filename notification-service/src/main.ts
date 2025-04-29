@@ -9,6 +9,9 @@ import { swaggerConfig } from "./config/swagger.config";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+   // Get logger instance
+   const logger = app.get<Logger>(WINSTON_MODULE_PROVIDER);
+
   // Set global prefix
   app.setGlobalPrefix('api/v1');
 
@@ -21,8 +24,6 @@ async function bootstrap() {
   // Enable CORS
   app.enableCors();
 
-  // Get logger instance
-  const logger = app.get<Logger>(WINSTON_MODULE_PROVIDER);
   
   await app.listen(3000);
   logger.info("Notification Service is running on port 3000", {

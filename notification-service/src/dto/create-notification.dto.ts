@@ -13,7 +13,6 @@ export class CreateNotificationDto {
   channel: NotificationType;
 
   @ApiProperty()
-  @IsEmail()
   @IsOptional()
   recipient?: string;
 
