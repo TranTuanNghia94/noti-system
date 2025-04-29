@@ -1,5 +1,27 @@
 #!/bin/bash
 
+# Check if jq is installed
+if ! command -v jq &> /dev/null; then
+    echo "jq is not installed. Installing jq..."
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        brew install jq
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux
+        if command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y jq
+        elif command -v yum &> /dev/null; then
+            sudo yum install -y jq
+        else
+            echo "Error: Could not determine package manager to install jq"
+            exit 1
+        fi
+    else
+        echo "Error: Unsupported operating system"
+        exit 1
+    fi
+fi
+
 # Read credentials from .env file
 if [ -f .env ]; then
     export $(cat .env | xargs)
@@ -25,4 +47,5 @@ curl --location "https://api.cloud.hashicorp.com/secrets/2023-11-28/organization
 cp ./email-service/.env ./notification-service/.env
 cp ./email-service/.env ./telegram-service/.env
 cp ./email-service/.env ./kong/.env
+cp ./email-service/.env ./mongodb-init/.env
 echo "Secrets have been written to .env files successfully."

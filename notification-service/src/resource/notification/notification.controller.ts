@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, HttpCode } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { NotificationService } from './notification.service';
 import { CreateNotificationDto } from 'src/dto/create-notification.dto';
@@ -22,6 +22,7 @@ export class NotificationController {
   }
 
   @Post()
+  @HttpCode(200)
   @ApiOperation({ summary: 'Send a new notification' })
   @ApiResponse({ status: 200, description: 'The notification has been sent.' })
   @ApiResponse({ status: 400, description: 'Bad request.' })
