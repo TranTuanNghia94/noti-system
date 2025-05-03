@@ -19,6 +19,7 @@ services:
       KONG_ADMIN_LISTEN: 0.0.0.0:8001
     volumes:
       - ./kong/kong.yml:/usr/local/kong/kong.yml:ro
+    restart: unless-stopped
     networks:
       - notification-network
     healthcheck:
@@ -33,6 +34,7 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    restart: unless-stopped
     networks:
       - notification-network
     healthcheck:
@@ -46,6 +48,7 @@ services:
     depends_on:
       zookeeper:
         condition: service_healthy
+    restart: unless-stopped
     ports:
       - "9092:9092"
     environment:
@@ -63,6 +66,7 @@ services:
     image: mongo:latest
     ports:
       - "27017:27017"
+    restart: unless-stopped
     env_file:
       - .env
     volumes:
@@ -70,6 +74,8 @@ services:
       - ./mongodb-init/mongo-init.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     environment:
       MONGO_INITDB_DATABASE: notification_db
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     networks:
       - notification-network
     command: mongod --bind_ip_all
@@ -80,8 +86,7 @@ services:
     build:
       context: ./notification-service
       dockerfile: Dockerfile
-    env_file:
-      - ./mongodb-init/.env
+    restart: unless-stopped
     environment:
       - NODE_ENV=development
       - KAFKA_BROKERS=kafka:29092
@@ -96,8 +101,7 @@ services:
     build:
       context: ./email-service
       dockerfile: Dockerfile
-    env_file:
-      - ./mongodb-init/.env
+    restart: unless-stopped
     environment:
       - NODE_ENV=development
       - KAFKA_BROKERS=kafka:29092
@@ -112,8 +116,7 @@ services:
     build:
       context: ./telegram-service
       dockerfile: Dockerfile
-    env_file:
-      - ./mongodb-init/.env
+    restart: unless-stopped
     environment:
       - NODE_ENV=development
       - KAFKA_BROKERS=kafka:29092

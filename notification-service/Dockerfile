@@ -23,6 +23,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
+# Copy .env file
+COPY .env ./
 
 # Clean up
 RUN npm cache clean --force

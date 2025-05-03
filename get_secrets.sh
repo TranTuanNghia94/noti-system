@@ -41,6 +41,9 @@ HCP_API_TOKEN=$(curl --location "https://auth.idp.hashicorp.com/oauth2/token" \
 # Get secrets and write to .env files
 curl --location "https://api.cloud.hashicorp.com/secrets/2023-11-28/organizations/1f1a999e-28fa-4cf4-8ae6-2cce12d8950b/projects/66e84643-906e-4646-ae99-04da34757f17/apps/sample-app/secrets:open" \
 --request GET \
---header "Authorization: Bearer $HCP_API_TOKEN" | jq -r '.secrets[] | "\(.name)=\(.static_version.value)"' > ./mongodb-init/.env
+--header "Authorization: Bearer $HCP_API_TOKEN" | jq -r '.secrets[] | "\(.name)=\(.static_version.value)"' > ./notification-service/.env
+
+cp ./notification-service/.env ./email-service/.env
+cp ./notification-service/.env ./telegram-service/.env
 
 echo "Secrets have been written to .env files successfully."
