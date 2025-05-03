@@ -2,8 +2,7 @@ import { IsEnum, IsString, IsObject, IsOptional } from 'class-validator';
 
 export enum NotificationType {
   EMAIL = 'email',
-  TELEGRAM = 'telegram',
-  SMS = 'sms',
+  TELEGRAM = 'telegram'
 }
 
 export class NotificationDto {
