@@ -104,6 +104,15 @@ http://localhost:27017
 http://localhost:8081
 ```
 
+## Kiểm Tra Thông Báo
+
+#### 1. Gửi thông báo qua email:
+Bạn có thể sử dụng một số email để kiểm tra hệ thống thông báo tại `https://yopmail.com/en/`
+
+
+#### 2. Gửi thông báo qua Telegram
+Bạn có thể tìm kiếm bot trong Telegram và gửi tin nhắn cho `@nghia_noti_000_bot`
+
 ## Xử Lý Sự Cố
 
 1. Kiểm tra logs của service:

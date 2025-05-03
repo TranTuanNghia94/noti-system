@@ -111,12 +111,24 @@ http://localhost:27017
 http://localhost:8081
 ```
 
+## Testing Notification
+
+#### 1. Send a test notification by email:
+You can use some email to test the notification system in `https://yopmail.com/en/`
+
+
+#### 2. Send a test notification by Telegram
+You can search for a bot in Telegram and send a message to it `@nghia_noti_000_bot`
+
+
 ## Troubleshooting
 
 1. Check service logs:
 ```bash
 docker-compose logs <service-name>
 ```
+
+
 
 2. Verify network connectivity:
 ```bash
