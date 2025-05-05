@@ -23,13 +23,15 @@ Hệ thống bao gồm các thành phần sau:
 
 ### Biến Môi Trường
 
-1. Tạo file `.env` trong thư mục gốc từ file `.env.example`:
+1. Rename file `.env.example` thành `.env` và điền thông tin các key:
 ```env
 HCP_CLIENT_ID=
 HCP_CLIENT_SECRET=
+MONGO_INITDB_ROOT_USERNAME=
+MONGO_INITDB_ROOT_PASSWORD=
 ```
 
-2. Tự động tạo file .env:
+2. Tự động tạo các secret key:
 - Cho Windows:
 ```bash
 ./get_secrets.bat

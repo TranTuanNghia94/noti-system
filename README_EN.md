@@ -31,13 +31,15 @@ The system consists of the following components:
 
 ### Environment Variables
 
-1. Create a `.env` file in the root directory from `.env.example` file:
+1. Rename file `.env.example` to `.env` and fill in the following variables:
 ```env
 HCP_CLIENT_ID=
 HCP_CLIENT_SECRET=
+MONGO_INITDB_ROOT_USERNAME=
+MONGO_INITDB_ROOT_PASSWORD=
 ```
 
-2. Auto gen .env file:
+2. Auto gen secret key:
 - For Windows:
 ```bash
 ./get_secrets.bat
